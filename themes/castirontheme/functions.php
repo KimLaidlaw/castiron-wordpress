@@ -8,15 +8,13 @@ if ( !defined( 'WPINC' ) ) {
 	exit( 'This file cannot be accessed directly.' );
 }
 
+$template_directory = get_template_directory();
 
+// Basic functionality
+require_once $template_directory . '/includes/functions-utilities.php';
 
-// enqueue main theme stylesheet
-function _castiron_enqueue_styles() {
-	wp_enqueue_style(
-		'theme-styles', 
-		get_template_directory_uri() . '/assets/css/style.css', 
-		false, 
-		filemtime( get_template_directory() . '/assets/css/style.css' )
-	);
-}
-add_action('wp_enqueue_scripts', '_castiron_enqueue_styles');
+// Enqueue scripts and styles
+require_once $template_directory . '/includes/functions-enqueue.php';
+
+// Removes all comment functionality
+require_once $template_directory . '/includes/functions-nocomment.php';
