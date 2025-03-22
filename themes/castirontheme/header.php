@@ -16,7 +16,11 @@
   <?php wp_body_open(); ?>
 
   <div class="page-wrapper">
+    <header class="header">
+      <div class="content">
+        <?php // get_template_part( 'partials/header-nav' ); ?>
 
-    <?php // get_template_part( 'partials/header-nav' ); ?>
+      </div>
+    </header>
 
     <main id="main" class="main">
