@@ -1,6 +1,10 @@
 # ignore built-in wordpress themes
 /themes/twenty*
 
+# ignore uploads folder
+
+/uploads/*
+
 # ignore node dependency directories
 node_modules/
 
