@@ -7,6 +7,10 @@
  
   <title><?php wp_title(' - ', 'echo', 'right'); ?></title>
 
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
   <?php wp_head(); ?>
   <?php get_template_part( 'partials/favicons' ); ?>
 
