@@ -15,7 +15,7 @@
       <?php if(!empty(trim($headline))) : ?>
         <h1>
           <?php if(!empty(trim($prehead))) : ?>
-            <span class="prehead"><?= $prehead; ?>
+            <span class="prehead"><?= $prehead; ?></span> 
           <?php endif; ?>
           <?= $headline; ?>
         </h1>
