@@ -8,13 +8,14 @@
   if(!empty(trim($title_list))) {
     $titles = preg_split('/\s*\R/', rtrim($title_list), NULL, PREG_SPLIT_NO_EMPTY);
   }
+  $email_intro = $hero['email_intro'];
+  $email_address = $hero['email_address'];
   $image = $hero['image'];
 
 ?>
 
 <!-- front-page.php -->
-<?php if(have_posts()) : ?>
-  <?php while(have_posts()): the_post(); ?>
+
     <div class="content">
 
       <div class="hero-section">
@@ -22,18 +23,34 @@
           <?php if(!empty(trim($headline))) : ?>
             <h1>
               <?php if(!empty(trim($prehead))) : ?>
-                <span class="prehead"><?= $prehead; ?></span> 
+                <span class="prehead head-three"><?= $prehead; ?></span> 
               <?php endif; ?>
               <?= $headline; ?>
             </h1>
           <?php endif; ?>
-          <?php if($titles) : ?>
-            <ul class="title-list">
-              <?php foreach($titles as $title) : ?>
-                <li><?= $title; ?></li>
-              <?php endforeach; ?>
-            </ul>
+          <div class="title-row">
+            <div class="cast-iron-logo">
+              <img src="/wp-content/themes/castirontheme/assets/images/castironlogo.png" alt="cast iron pan logo" />
+            </div>
+            <?php if($titles) : ?>
+              <ul class="title-list">
+                <?php foreach($titles as $title) : ?>
+                  <li><?= $title; ?></li>
+                <?php endforeach; ?>
+              </ul>
+            <?php endif; ?>
+          </div>
+          <?php if (!empty(trim($email_address))) : ?>
+            <div class="email-row">
+              <p class="head-three">
+                <?php if (!empty(trim($email_intro))) : ?>
+                  <?= $email_intro; ?>
+                <?php endif; ?>
+                <a href="mailto:<?= $email_address; ?>"><?= $email_address; ?></a>
+              </p>
+            </div>
           <?php endif; ?>
+        
         </div>
 
         <div class="hero-image">
@@ -44,8 +61,7 @@
       </div>
 
     </div>
-  <?php endwhile; ?>
-<?php endif; ?>
+
 
 <?php
   get_footer(); 
