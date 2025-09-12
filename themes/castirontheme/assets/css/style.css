@@ -44,6 +44,10 @@ body {
   font-weight: 300;
   font-optical-sizing: auto;
 }
+img {
+  height: auto;
+  max-width: 100%;
+}
 .page-wrapper {
   display: flex;
   flex-direction: column;
@@ -68,29 +72,30 @@ body {
 .footer .content {
   padding: 1em;
 }
-h1, h2 {
+h1, .head-one, h2, .head-two, h3, .head-three {
   text-wrap: balance;
   line-height: 1;
   font-family: var(--display-font);
   letter-spacing: .02em;
 }
-h1 {
-  font-size: 3rem;
+h1, .head-one {
+  font-size: 4rem;
   color: var(--highlight);
   margin-bottom: 2rem;
 }
-h1 .prehead {
-  display: block;
+h2, .head-two {
+  font-size: 1.25rem;
+  font-weight: 500;
+}
+h3, .head-three {
+  font-family: var(--body-font);
   text-transform: uppercase;
   color: var(--black);
   font-family: var(--body-font);
-  font-size: .175em;
+  font-size: .875rem;
   font-weight: 700;
+  letter-spacing: .1em;
   margin-bottom: 1em;
-}
-h2 {
-  font-size: 1.25rem;
-  font-weight: 500;
 }
 p {
   margin-bottom: 2rem;
@@ -140,7 +145,26 @@ p {
   flex: 1 0 100%;
 }
 
+.hero-section {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 2em;
+}
+.prehead {
+  display: block;
+}
+.title-row {
+  display: flex;
+  justify-content: end;
+  gap: 1em;
+}
+.cast-iron-logo {
+  flex: 0 1 6em;
+  display: block;
+  /* margin-left: auto; */
+}
 .title-list {
+  flex: 0 1 13em;
   display: flex;
   flex-direction: column;
   row-gap: 1em;
@@ -149,7 +173,7 @@ p {
   font-size: .875em;
   font-weight:  400;
   letter-spacing: .15em;
-  max-width: 
+  max-width: 16em;
 }
 .title-list li + li {
   padding-top: 1em;
