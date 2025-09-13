@@ -94,6 +94,7 @@ h3, .head-three {
   font-family: var(--body-font);
   font-size: .875rem;
   font-weight: 700;
+  line-height: 1.4;
   letter-spacing: .1em;
   margin-bottom: 1em;
 }
@@ -104,28 +105,62 @@ p {
 .footer-copyright {
   font-size: .75em;
 } 
-@media only screen and ( min-width: 37.5em ) {
-  h1 {
+a {
+  color: inherit;
+}
+.head-three a {
+  color: var(--black);
+  text-decoration: none;
+  transition: all .3s ease-in-out;
+}
+.head-three a:active,
+.head-three a:hover,
+.head-three a:focus {
+  color: var(--highlight);
+}
+@media only screen and ( min-width: 37.5em ) { /* 600px */
+  h1, .head-one {
     font-size: 4rem;
   }
-  h2 {
+  h2, .head-two {
     font-size: 1.5rem;
+  }
+  h3, .head-three {
+    font-size: 1rem;
   }
   p {
     font-size: 1.25rem;
   }
 }
-@media only screen and ( min-width: 56.25em ) {
+@media only screen and ( min-width: 46.875em ) { /* 750px */
+  h1, .head-one {
+    font-size: 5rem;
+  }
+  h2, .head-two {
+    font-size: 1.5rem;
+  }
+  h3, .head-three {
+
+  }
+  p {
+    font-size: 1.25rem;
+  }
+}
+}
+@media only screen and ( min-width: 56.25em ) { /* 900px */
   .header .content, 
   .main .content, 
   .footer .content{
     padding: 2em;
   }
-  h1 {
+  h1, .head-one {
     font-size: 6rem;
   }
-  h2 {
+  h2, .head-two {
     font-size: 2rem;
+  }
+  h3, .head-three {
+
   }
   p {
     font-size: 1.5rem;
@@ -150,6 +185,15 @@ p {
   flex-wrap: wrap;
   gap: 2em;
 }
+.hero-text {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  gap: 2em;
+}
+.hero-section h1 {
+  margin-bottom: 0;
+}
 .prehead {
   display: block;
 }
@@ -161,7 +205,6 @@ p {
 .cast-iron-logo {
   flex: 0 1 6em;
   display: block;
-  /* margin-left: auto; */
 }
 .title-list {
   flex: 0 1 13em;
@@ -179,3 +222,16 @@ p {
   padding-top: 1em;
   border-top: 1px solid var(--black);
 }
+.email-row p {
+  color: var(--highlight);
+}
+@media only screen and (min-width: 37.5em) {
+  .hero-section {
+    flex-wrap: nowrap;
+    align-items: center;
+  }
+  .hero-image {
+    flex: 0 1 50%;
+  }
+}
+@media only screen and (min-width: 37.5em) {
