@@ -3,8 +3,8 @@
 namespace Simple_History;
 
 use Simple_History\Simple_History;
-use Simple_History\Menu_Page;
 use Simple_History\Services\Setup_Settings_Page;
+use Simple_History\Constants;
 
 /**
  * Helper functions.
@@ -53,6 +53,7 @@ class Helpers {
 		$args = wp_parse_args( $args, $defaults );
 
 		if ( ! class_exists( 'WP_Text_Diff_Renderer_Table' ) ) {
+			/** @phpstan-ignore require.fileNotFound */
 			require ABSPATH . WPINC . '/wp-diff.php';
 		}
 
@@ -103,7 +104,7 @@ class Helpers {
 			$r .= "</thead>\n";
 		}
 
-		$r .= "<tbody>\n$diff</div>\n</tbody>\n";
+		$r .= "<tbody>\n$diff\n</tbody>\n";
 		$r .= '</table>';
 
 		$r .= '</div>';
@@ -634,6 +635,7 @@ class Helpers {
 	 */
 	public static function is_plugin_active( $plugin_file_path ) {
 		if ( ! function_exists( 'is_plugin_active' ) ) {
+			/** @phpstan-ignore requireOnce.fileNotFound */
 			require_once ABSPATH . 'wp-admin/includes/plugin.php';
 		}
 
@@ -813,6 +815,12 @@ class Helpers {
 			$title = self::get_settings_section_title_output( $title );
 		}
 
+		/**
+		 * In WP 6.7 after section is not always outputted.
+		 * See track tickets:
+		 * https://core.trac.wordpress.org/ticket/62746
+		 * https://core.trac.wordpress.org/changeset/59564
+		 */
 		$args = [
 			'before_section' => '<div class="sh-SettingsPage-settingsSection-wrap">',
 			'after_section' => '</div>',
@@ -831,7 +839,7 @@ class Helpers {
 
 		?>
 		<div class="sh-PageHeader-rightLink">
-			<a href="https://simple-history.com/add-ons/?utm_source=wpadmin&utm_content=nav-header" target="_blank">
+			<a href="https://simple-history.com/add-ons/?utm_source=wordpress_admin&utm_medium=Simple_History&utm_campaign=premium_upsell&utm_content=header-addons" target="_blank">
 				<span class="sh-PageHeader-settingsLinkIcon sh-Icon sh-Icon--extension"></span>
 				<span class="sh-PageHeader-settingsLinkText"><?php esc_html_e( 'Add-ons', 'simple-history' ); ?></span>
 			</a>
@@ -916,7 +924,7 @@ class Helpers {
 		 *
 		 * @example
 		 * ```php
-		 *  // Remove the "Clear log"-button, so a user with admin access can not clear the log
+		 *  // Remove the "Clear"-button, so a user with admin access can not clear the log
 		 *  // and wipe their mischievous behavior from the log.
 		 *  add_filter(
 		 *      'simple_history/user_can_clear_log',
@@ -1283,7 +1291,7 @@ class Helpers {
 	 * @param int $period_days Number of days to get events for.
 	 * @return int Number of days.
 	 */
-	public static function get_num_events_last_n_days( $period_days = 28 ) {
+	public static function get_num_events_last_n_days( $period_days = Constants::DAYS_PER_MONTH ) {
 		$simple_history = Simple_History::get_instance();
 		$transient_key = 'sh_' . md5( __METHOD__ . $period_days . '_2' );
 
@@ -1320,7 +1328,7 @@ class Helpers {
 	 * @param int $period_days Number of days to get events for.
 	 * @return array Array with date as key and number of events as value.
 	 */
-	public static function get_num_events_per_day_last_n_days( $period_days = 28 ) {
+	public static function get_num_events_per_day_last_n_days( $period_days = Constants::DAYS_PER_MONTH ) {
 		$simple_history = Simple_History::get_instance();
 		$transient_key = 'sh_' . md5( __METHOD__ . $period_days . '_3' );
 		$dates = get_transient( $transient_key );
@@ -1737,5 +1745,68 @@ class Helpers {
 			],
 			self::get_settings_page_url()
 		);
+	}
+
+	/**
+	 * Checks if an event exists in the database.
+	 * Does not check permissions.
+	 *
+	 * @param int $event_id Event ID.
+	 * @return bool True if event exists, false otherwise.
+	 */
+	public static function event_exists( $event_id ) {
+		global $wpdb;
+		$simple_history = Simple_History::get_instance();
+		$events_table_name = $simple_history->get_events_table_name();
+
+		return (bool) $wpdb->get_var(
+			$wpdb->prepare(
+				'SELECT COUNT(*) FROM %i WHERE id = %d',
+				$events_table_name,
+				$event_id
+			)
+		);
+	}
+
+	/**
+	 * Returns markup for a tooltip with help text icon.
+	 *
+	 * @param string $tooltip_text The text to display in the tooltip.
+	 * @return string
+	 */
+	public static function get_tooltip_html( $tooltip_text ) {
+		$tooltip_text = trim( $tooltip_text );
+
+		if ( empty( $tooltip_text ) ) {
+			return '';
+		}
+
+		ob_start();
+		?>
+		<span class="sh-Icon sh-Icon--help sh-TooltipIcon" title="<?php echo esc_html( $tooltip_text ); ?>"></span>
+		<?php
+		return trim( ob_get_clean() );
+	}
+
+	/**
+	 * Get all sticky event IDs.
+	 *
+	 * @return array<int> Array of sticky event IDs.
+	 */
+	public static function get_sticky_event_ids() {
+		global $wpdb;
+
+		$simple_history = Simple_History::get_instance();
+		$contexts_table = $simple_history->get_contexts_table_name();
+
+		$results = $wpdb->get_col(
+			$wpdb->prepare(
+				'SELECT history_id FROM %i WHERE `key` = %s',
+				$contexts_table,
+				'_sticky'
+			)
+		);
+
+		return array_map( 'intval', $results );
 	}
 }

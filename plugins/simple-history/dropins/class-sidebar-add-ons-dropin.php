@@ -35,13 +35,13 @@ class Sidebar_Add_Ons_Dropin extends Dropin {
 		?>
 		<!-- 
 		Insert promo:
-		"Our New Year’s Sale is Here – 50% Off All Add-Ons 🙀".
-		Link to: https://simple-history.com/add-ons/?utm_source=wpadmin&utm_content=new-year-sale-sidebar
+		"Our New Year's Sale is Here - 50% Off All Add-Ons 🙀".
+		Link to: https://simple-history.com/add-ons/?utm_source=wordpress_admin&utm_content=new-year-sale-sidebar
 		-->
 		<div class="postbox">
 			<div class="inside" style="background-color: var(--sh-color-pink-light); padding: 1rem; margin-top: 0;">
 				<p style="margin: 0; font-size: 1rem; font-weight: bold;">
-					<?php esc_html_e( 'Our New Year’s Sale is Here – 50% Off All Add-Ons 🙀', 'simple-history' ); ?>
+					<?php esc_html_e( 'Our New Year\'s Sale is Here - 50% Off All Add-Ons 🙀', 'simple-history' ); ?>
 				</p>
 
 				<p>Hurry - this sale ends January 31.</p>
@@ -49,7 +49,7 @@ class Sidebar_Add_Ons_Dropin extends Dropin {
 				<p>
 					<a 
 						class="sh-PremiumFeaturesPostbox-button"
-						href="https://simple-history.com/add-ons/?utm_source=wpadmin&utm_content=new-year-sale-sidebar" 
+						href="https://simple-history.com/add-ons/?utm_source=wordpress_admin&utm_content=new-year-sale-sidebar" 
 						target="_blank"
 						>
 						<?php esc_html_e( 'Get Add-Ons Now', 'simple-history' ); ?>
@@ -70,60 +70,8 @@ class Sidebar_Add_Ons_Dropin extends Dropin {
 			return;
 		}
 
-		$premium_url = 'https://simple-history.com/add-ons/premium/?utm_source=wpadmin&utm_content=premium-sidebar';
-
-		?>
-		<div class="postbox sh-PremiumFeaturesPostbox" style="--box-bg-color: var(--sh-color-cream);">
-
-			<div class="inside">
-				<p class="sh-PremiumFeaturesPostbox-preTitleFeaturesBadge"><em class="sh-PremiumFeatureBadge"><?php esc_html_e( 'Premium', 'simple-history' ); ?></em></p>
-
-				<h3 class="sh-PremiumFeaturesPostbox-title">
-					<?php echo esc_html__( 'Unlock more features with Simple History Premium!', 'simple-history' ); ?>
-				</h3>
-
-				<ul class="sh-PremiumFeaturesPostbox-featuresList">
-					<li class="sh-PremiumFeaturesPostbox-featuresList-item">
-						<?php esc_html_e( 'Add custom events manually', 'simple-history' ); ?>
-
-						<span class="sh-PremiumFeatureBadge" style="--sh-badge-background-color: var(--sh-color-yellow);">
-							<strong><?php esc_html_e( 'New!', 'simple-history' ); ?></strong>
-						</span>
-
-						<em class="sh-PremiumFeaturesPostbox-featuresList-item-discrete">
-							<?php esc_html_e( "Document important changes by creating custom log entries for team actions, content updates, or system changes that aren't automatically tracked.", 'simple-history' ); ?>
-						</em>
-					</li>
-
-					<li class="sh-PremiumFeaturesPostbox-featuresList-item">
-						<?php esc_html_e( 'Stealth Mode', 'simple-history' ); ?>
-
-						<span class="sh-PremiumFeatureBadge" style="--sh-badge-background-color: var(--sh-color-yellow);">
-							<strong><?php esc_html_e( 'New!', 'simple-history' ); ?></strong>
-						</span>
-
-						<em class="sh-PremiumFeaturesPostbox-featuresList-item-discrete">
-							<?php esc_html_e( 'Allow only specified users to see Simple History in the WordPress admin.', 'simple-history' ); ?>
-						</em>
-					</li>
-
-					<li class="sh-PremiumFeaturesPostbox-featuresList-item"><?php echo esc_html__( 'Export search results as CSV and JSON', 'simple-history' ); ?></li>
-					<li class="sh-PremiumFeaturesPostbox-featuresList-item"><?php echo esc_html__( 'Customize log retention by setting the number of days to keep logs', 'simple-history' ); ?></li>
-					<li class="sh-PremiumFeaturesPostbox-featuresList-item"><?php echo esc_html__( 'Limit number of failed login attempts that are logged', 'simple-history' ); ?></li>
-					<li class="sh-PremiumFeaturesPostbox-featuresList-item"><?php echo esc_html__( 'Control how to store IP Addresses – anonymized or not', 'simple-history' ); ?></li>
-					<li class="sh-PremiumFeaturesPostbox-featuresList-item"><?php echo esc_html__( 'View a map of where failed login attempts happened', 'simple-history' ); ?></li>
-					<li class="sh-PremiumFeaturesPostbox-featuresList-item"><?php echo esc_html__( 'Control what messages that are logged to match your needs', 'simple-history' ); ?></li>
-					<li class="sh-PremiumFeaturesPostbox-featuresList-item"><?php echo esc_html__( 'Remove banners like this one', 'simple-history' ); ?></li>
-				</ul>
-
-				<p>
-					<a href="<?php echo esc_url( $premium_url ); ?>" target="_blank" class="sh-PremiumFeaturesPostbox-button">
-						<?php esc_html_e( 'Upgrade to Premium', 'simple-history' ); ?>
-					</a>
-				</p>
-			</div>
-		</div>
-		<?php
+		// phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
+		echo self::get_premium_features_postbox_html();
 	}
 
 	/**
@@ -140,36 +88,13 @@ class Sidebar_Add_Ons_Dropin extends Dropin {
 			return;
 		}
 
-		$woocommerce_logger_url = 'https://simple-history.com/add-ons/woocommerce/?utm_source=wpadmin&utm_content=wc-logger-sidebar';
+		// Hide if Premium is installed, because one feature of premium is hiding promos.
+		if ( Helpers::is_premium_add_on_active() ) {
+			return;
+		}
 
-		?>
-		<div class="postbox sh-PremiumFeaturesPostbox">
-			<div class="inside">
-
-				<p class="sh-PremiumFeaturesPostbox-preTitleFeaturesBadge"><em class="sh-PremiumFeatureBadge"><?php esc_html_e( 'Add-on', 'simple-history' ); ?></em></p>
-
-				<h3 class="sh-PremiumFeaturesPostbox-title">
-					<?php esc_html_e( 'WooCommerce Logger', 'simple-history' ); ?>
-				</h3>
-
-				<p><?php esc_html_e( 'Log detailed information about many things that happen in your WooCommerce shop:', 'simple-history' ); ?></p>
-		
-				<ul class="sh-PremiumFeaturesPostbox-featuresList">
-					<li class="sh-PremiumFeaturesPostbox-featuresList-item"><?php esc_html_e( 'Order edits', 'simple-history' ); ?></li>
-					<li class="sh-PremiumFeaturesPostbox-featuresList-item"><?php esc_html_e( 'Product modifications', 'simple-history' ); ?></li>
-					<li class="sh-PremiumFeaturesPostbox-featuresList-item"><?php esc_html_e( 'Coupon changes', 'simple-history' ); ?></li>
-					<li class="sh-PremiumFeaturesPostbox-featuresList-item"><?php esc_html_e( 'WooCommerce settings adjustments', 'simple-history' ); ?></li>
-					<li class="sh-PremiumFeaturesPostbox-featuresList-item"><?php esc_html_e( 'Email templates updates', 'simple-history' ); ?></li>
-				</ul>
-
-				<p style="margin-bottom: .25rem;">
-					<a href="<?php echo esc_url( $woocommerce_logger_url ); ?>" target="_blank" class="sh-PremiumFeaturesPostbox-button">
-						<?php esc_html_e( 'Buy WooCommerce Logger', 'simple-history' ); ?>
-					</a>
-				</p>
-			</div>
-		</div>
-		<?php
+		// phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
+		echo self::get_woocommerce_logger_features_postbox_html();
 	}
 
 	/**
@@ -181,8 +106,29 @@ class Sidebar_Add_Ons_Dropin extends Dropin {
 			return;
 		}
 
-		$debug_and_monitor_url = 'https://simple-history.com/add-ons/debug-and-monitor/?utm_source=wpadmin&utm_content=debug-monitor-sidebar';
+		// Hide if Premium is installed, because one feature of premium is hiding promos.
+		if ( Helpers::is_premium_add_on_active() ) {
+			return;
+		}
 
+		// phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
+		echo self::get_debug_and_monitor_features_postbox_html();
+	}
+
+	/**
+	 * Get HTML for Debug and Monitor add-on promo.
+	 *
+	 * @return string HTML
+	 */
+	public static function get_debug_and_monitor_features_postbox_html() {
+		// Hide if Premium is installed, because one feature of premium is hiding promos.
+		if ( Helpers::is_premium_add_on_active() ) {
+			return;
+		}
+
+		$debug_and_monitor_url = 'https://simple-history.com/add-ons/debug-and-monitor/?utm_source=wordpress_admin&utm_medium=Simple_History&utm_campaign=premium_upsell&utm_content=debug-monitor-sidebar';
+
+		ob_start();
 		?>
 		<div class="postbox sh-PremiumFeaturesPostbox">
 			<div class="inside">
@@ -216,5 +162,119 @@ class Sidebar_Add_Ons_Dropin extends Dropin {
 			</div>
 		</div>
 		<?php
+
+		return ob_get_clean();
+	}
+
+	/**
+	 * Get HTML for Premium add-on promo.
+	 *
+	 * @return string HTML
+	 */
+	public static function get_premium_features_postbox_html() {
+		$premium_url = 'https://simple-history.com/add-ons/premium/?utm_source=wordpress_admin&utm_medium=Simple_History&utm_campaign=premium_upsell&utm_content=premium-sidebar';
+
+		ob_start();
+		?>
+		<div class="postbox sh-PremiumFeaturesPostbox" style="--box-bg-color: var(--sh-color-cream);">
+
+			<div class="inside">
+				<p class="sh-PremiumFeaturesPostbox-preTitleFeaturesBadge"><em class="sh-PremiumFeatureBadge"><?php esc_html_e( 'Premium', 'simple-history' ); ?></em></p>
+
+				<h3 class="sh-PremiumFeaturesPostbox-title">
+					<?php echo esc_html__( 'Unlock more features with Simple History Premium!', 'simple-history' ); ?>
+				</h3>
+
+				<ul class="sh-PremiumFeaturesPostbox-featuresList">
+					<!-- Sticky events -->
+					<li class="sh-PremiumFeaturesPostbox-featuresList-item">
+						<?php esc_html_e( 'Sticky events', 'simple-history' ); ?>
+
+						<span class="sh-PremiumFeatureBadge" style="--sh-badge-background-color: var(--sh-color-yellow);">
+							<strong><?php esc_html_e( 'New!', 'simple-history' ); ?></strong>
+						</span>
+
+						<em class="sh-PremiumFeaturesPostbox-featuresList-item-discrete">
+							<?php esc_html_e( 'Pin important log entries to the top of the log for easy access.', 'simple-history' ); ?>
+						</em>
+					</li>
+
+					<!-- Custom events -->
+					<li class="sh-PremiumFeaturesPostbox-featuresList-item">
+						<?php esc_html_e( 'Add custom events manually', 'simple-history' ); ?>
+
+						<em class="sh-PremiumFeaturesPostbox-featuresList-item-discrete">
+							<?php esc_html_e( "Document important changes by creating custom log entries for team actions, content updates, or system changes that aren't automatically tracked.", 'simple-history' ); ?>
+						</em>
+					</li>
+
+					<li class="sh-PremiumFeaturesPostbox-featuresList-item">
+						<?php esc_html_e( 'Stealth Mode', 'simple-history' ); ?>
+
+						<em class="sh-PremiumFeaturesPostbox-featuresList-item-discrete">
+							<?php esc_html_e( 'Allow only specified users to see Simple History in the WordPress admin.', 'simple-history' ); ?>
+						</em>
+					</li>
+
+					<li class="sh-PremiumFeaturesPostbox-featuresList-item"><?php echo esc_html__( 'Export search results as CSV and JSON', 'simple-history' ); ?></li>
+					<li class="sh-PremiumFeaturesPostbox-featuresList-item"><?php echo esc_html__( 'Customize log retention by setting the number of days to keep logs', 'simple-history' ); ?></li>
+					<li class="sh-PremiumFeaturesPostbox-featuresList-item"><?php echo esc_html__( 'Limit number of failed login attempts that are logged', 'simple-history' ); ?></li>
+					<li class="sh-PremiumFeaturesPostbox-featuresList-item"><?php echo esc_html__( 'Control how to store IP Addresses – anonymized or not', 'simple-history' ); ?></li>
+					<li class="sh-PremiumFeaturesPostbox-featuresList-item"><?php echo esc_html__( 'View a map of where failed login attempts happened', 'simple-history' ); ?></li>
+					<li class="sh-PremiumFeaturesPostbox-featuresList-item"><?php echo esc_html__( 'Control what messages that are logged to match your needs', 'simple-history' ); ?></li>
+					<li class="sh-PremiumFeaturesPostbox-featuresList-item"><?php echo esc_html__( 'Remove banners like this one', 'simple-history' ); ?></li>
+				</ul>
+
+				<p>
+					<a href="<?php echo esc_url( $premium_url ); ?>" target="_blank" class="sh-PremiumFeaturesPostbox-button">
+						<?php esc_html_e( 'Upgrade to Premium', 'simple-history' ); ?>
+					</a>
+				</p>
+			</div>
+		</div>
+		<?php
+
+		return ob_get_clean();
+	}
+
+	/**
+	 * Get HTML for WooCommerce Logger add-on promo.
+	 *
+	 * @return string HTML
+	 */
+	public static function get_woocommerce_logger_features_postbox_html() {
+		$woocommerce_logger_url = 'https://simple-history.com/add-ons/woocommerce/?utm_source=wordpress_admin&utm_medium=Simple_History&utm_campaign=premium_upsell&utm_content=wc-logger-sidebar';
+
+		ob_start();
+		?>
+		<div class="postbox sh-PremiumFeaturesPostbox">
+			<div class="inside">
+
+				<p class="sh-PremiumFeaturesPostbox-preTitleFeaturesBadge"><em class="sh-PremiumFeatureBadge"><?php esc_html_e( 'Add-on', 'simple-history' ); ?></em></p>
+
+				<h3 class="sh-PremiumFeaturesPostbox-title">
+					<?php esc_html_e( 'WooCommerce Logger', 'simple-history' ); ?>
+				</h3>
+
+				<p><?php esc_html_e( 'Log detailed information about many things that happen in your WooCommerce shop:', 'simple-history' ); ?></p>
+		
+				<ul class="sh-PremiumFeaturesPostbox-featuresList">
+					<li class="sh-PremiumFeaturesPostbox-featuresList-item"><?php esc_html_e( 'Order edits', 'simple-history' ); ?></li>
+					<li class="sh-PremiumFeaturesPostbox-featuresList-item"><?php esc_html_e( 'Product modifications', 'simple-history' ); ?></li>
+					<li class="sh-PremiumFeaturesPostbox-featuresList-item"><?php esc_html_e( 'Coupon changes', 'simple-history' ); ?></li>
+					<li class="sh-PremiumFeaturesPostbox-featuresList-item"><?php esc_html_e( 'WooCommerce settings adjustments', 'simple-history' ); ?></li>
+					<li class="sh-PremiumFeaturesPostbox-featuresList-item"><?php esc_html_e( 'Email templates updates', 'simple-history' ); ?></li>
+				</ul>
+
+				<p style="margin-bottom: .25rem;">
+					<a href="<?php echo esc_url( $woocommerce_logger_url ); ?>" target="_blank" class="sh-PremiumFeaturesPostbox-button">
+						<?php esc_html_e( 'Buy WooCommerce Logger', 'simple-history' ); ?>
+					</a>
+				</p>
+			</div>
+		</div>
+		<?php
+
+		return ob_get_clean();
 	}
 }
