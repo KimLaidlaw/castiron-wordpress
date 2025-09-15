@@ -133,19 +133,20 @@ a {
   }
 }
 @media only screen and ( min-width: 46.875em ) { /* 750px */
+  .header .content, 
+  .main .content, 
+  .footer .content{
+    padding: 2em;
+  }
   h1, .head-one {
     font-size: 5rem;
   }
   h2, .head-two {
     font-size: 1.5rem;
   }
-  h3, .head-three {
-
-  }
   p {
     font-size: 1.25rem;
   }
-}
 }
 @media only screen and ( min-width: 56.25em ) { /* 900px */
   .header .content, 
@@ -160,10 +161,21 @@ a {
     font-size: 2rem;
   }
   h3, .head-three {
-
+    font-size: 1.125rem;
   }
   p {
     font-size: 1.5rem;
+  }
+}
+@media only screen and (min-width: 65.625em) { /* 1050px */
+  h1, .head-one {
+    font-size: 6.75rem;
+  }
+  h2, .head-two {
+    font-size: 3rem;
+  }
+  h3, .head-three {
+    font-size: 1.25rem;
   }
 }
 
@@ -184,6 +196,7 @@ a {
   display: flex;
   flex-wrap: wrap;
   gap: 2em;
+  max-width: 75em;
 }
 .hero-text {
   display: flex;
@@ -203,7 +216,7 @@ a {
   gap: 1em;
 }
 .cast-iron-logo {
-  flex: 0 1 6em;
+  flex: 0 1 5.75em;
   display: block;
 }
 .title-list {
@@ -224,6 +237,7 @@ a {
 }
 .email-row p {
   color: var(--highlight);
+  text-align: right;
 }
 @media only screen and (min-width: 37.5em) {
   .hero-section {
@@ -234,4 +248,28 @@ a {
     flex: 0 1 50%;
   }
 }
-@media only screen and (min-width: 37.5em) {
+@media only screen and (min-width: 56.25em) {
+  .hero-text {
+    flex: 1 1 75%;
+  }
+  .hero-image {
+    flex: 1 1 50%;
+  }
+  .cast-iron-logo {
+    flex-basis: 6.25em;
+  }
+  .title-list {
+    font-size: .9375rem
+  }
+}
+@media only screen and (min-width: 65.625em) {
+  .hero-section {
+    gap: 4em;
+  }
+  .cast-iron-logo {
+    flex-basis: 6.75em;
+  }
+  .title-list {
+    font-size: 1rem
+  }
+}
